@@ -1,0 +1,2 @@
+rootProject.name='Expensify'
+include ':app'
