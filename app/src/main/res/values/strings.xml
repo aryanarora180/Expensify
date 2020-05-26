@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Expensify</string>
+    <string name="title_add_expense">Add expense</string>
+    <string name="title_dashboard">Dashboard</string>
 </resources>
