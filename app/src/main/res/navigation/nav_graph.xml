@@ -6,7 +6,7 @@
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="com.example.expensify.dashboard.DashboardFragment"
-        android:label="DashboardFragment" >
+        android:label="@string/title_dashboard" >
         <action
             android:id="@+id/action_dashboardFragment_to_addExpenseFragment"
             app:destination="@id/addExpenseFragment" />
@@ -14,5 +14,5 @@
     <fragment
         android:id="@+id/addExpenseFragment"
         android:name="com.example.expensify.addexpense.AddExpenseFragment"
-        android:label="AddExpenseFragment" />
+        android:label="@string/title_add_expense" />
 </navigation>
