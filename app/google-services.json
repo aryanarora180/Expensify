@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "108511896964",
+    "firebase_url": "https://expensify-8268c.firebaseio.com",
+    "project_id": "expensify-8268c",
+    "storage_bucket": "expensify-8268c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:108511896964:android:5c3bd524ba2023080069d1",
+        "android_client_info": {
+          "package_name": "com.example.expensify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "108511896964-bu2n076scaqhjsl22np9j81eai1cjfs6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.expensify",
+            "certificate_hash": "2398c0a23b43e6609097902f3ccb48df567bb294"
+          }
+        },
+        {
+          "client_id": "108511896964-q88k6463oa3sidres2mfb6kgshihil00.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpWtUOSyng_ri_BWhGH8boGQEgAPPSl-E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "108511896964-q88k6463oa3sidres2mfb6kgshihil00.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

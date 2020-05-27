@@ -2,4 +2,6 @@
     <string name="app_name">Expensify</string>
     <string name="title_add_expense">Add expense</string>
     <string name="title_dashboard">Dashboard</string>
+    <string name="login">Login</string>
+    <string name="login_failed">Login failed. Please try again.</string>
 </resources>
