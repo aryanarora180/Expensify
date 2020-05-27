@@ -58,5 +58,7 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:2.3.0-beta01"
     implementation "androidx.navigation:navigation-ui-ktx:2.3.0-beta01"
     implementation 'com.firebaseui:firebase-ui-auth:5.0.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
 }
 apply plugin: 'com.google.gms.google-services'

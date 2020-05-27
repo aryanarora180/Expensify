@@ -24,6 +24,10 @@ class DashboardFragment : Fragment() {
 
         binding.addExpenseFab.setOnClickListener { findNavController().navigate(R.id.action_dashboardFragment_to_addExpenseFragment) }
 
+        binding.incomeAmountText.text = viewModel.income
+        binding.expensesAmountText.text = viewModel.expenses
+        binding.balanceAmountText.text = viewModel.balance
+
         return binding.root
     }
 

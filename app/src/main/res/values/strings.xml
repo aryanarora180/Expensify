@@ -4,4 +4,12 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="login">Login</string>
     <string name="login_failed">Login failed. Please try again.</string>
+    <string name="add_income_expense">Add income/expense</string>
+    <string name="income">Income</string>
+    <string name="expense">Expense</string>
+    <string name="amount">Amount</string>
+    <string name="merchant">Merchant</string>
+    <string name="description">Description</string>
+    <string name="balance">Balance</string>
+    <string name="expenses">Expenses</string>
 </resources>
