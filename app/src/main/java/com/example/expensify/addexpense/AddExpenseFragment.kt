@@ -2,7 +2,9 @@ package com.example.expensify.addexpense
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.expensify.R
 import com.example.expensify.databinding.AddExpenseFragmentBinding
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 
 class AddExpenseFragment : Fragment() {
 
@@ -28,25 +31,32 @@ class AddExpenseFragment : Fragment() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val REQUEST_LOCATION_PERMISSION = 1
 
+    private var location: Location? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.add_expense_fragment, container, false)
 
-        viewModel = ViewModelProvider(this).get(AddExpenseViewModel::class.java)
+        viewModel =
+            ViewModelProvider(this, AddExpenseViewModelFactory(requireActivity().application)).get(
+                AddExpenseViewModel::class.java
+            )
 
-//        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-//
-//        if(isPermissionGranted()) {
-//            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-//                Log.i(TAG, "Location latitude: ${location.latitude} and longitude: ${location.longitude}")
-//            }
-//        } else {
-//            enableLocation()
-//        }
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
-
+        if (isPermissionGranted()) {
+            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                this.location = location
+                Log.i(
+                    TAG,
+                    "Location latitude: ${location.latitude} and longitude: ${location.longitude}"
+                )
+            }
+        } else {
+            enableLocation()
+        }
 
         return binding.root
     }

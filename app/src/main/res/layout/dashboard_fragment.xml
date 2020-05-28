@@ -91,6 +91,13 @@
 
         </androidx.core.widget.NestedScrollView>
 
+        <TextView
+            android:id="@+id/no_expenses_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/no_expenses_added"
+            android:visibility="gone" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_expense_fab"
