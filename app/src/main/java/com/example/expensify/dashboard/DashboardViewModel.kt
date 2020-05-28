@@ -57,7 +57,7 @@ class DashboardViewModel(application: Application) : ViewModel() {
                         amount,
                         document.getString("merchant")!!,
                         document.getString("description") ?: "",
-                        document.getGeoPoint("location"),
+                        document.getGeoPoint("geoPoint"),
                         document.getDate("date")!!
                     )
                 )

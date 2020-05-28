@@ -1,9 +1,11 @@
 package com.example.expensify.dashboard
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.expensify.R
 import com.example.expensify.helper.FirestoreExpense
@@ -12,8 +14,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.abs
 
-class ExpenseAdapter(private val expensesList: List<FirestoreExpense>) :
-    RecyclerView.Adapter<ExpenseAdapter.ViewHolder>() {
+class ExpenseAdapter(private val expensesList: List<FirestoreExpense>, private val navController: NavController) : RecyclerView.Adapter<ExpenseAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindItems(expense: FirestoreExpense) {
@@ -41,8 +42,7 @@ class ExpenseAdapter(private val expensesList: List<FirestoreExpense>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v =
-            LayoutInflater.from(parent.context).inflate(R.layout.list_item_expense, parent, false)
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.list_item_expense, parent, false)
         return ViewHolder(v)
     }
 
@@ -52,6 +52,10 @@ class ExpenseAdapter(private val expensesList: List<FirestoreExpense>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindItems(expensesList[position])
+        holder.itemView.setOnClickListener {
+            val action = DashboardFragmentDirections.actionDashboardFragmentToViewExpenseFragment(expensesList[position])
+            navController.navigate(action)
+        }
     }
 
 }

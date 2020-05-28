@@ -37,7 +37,7 @@ class DashboardFragment : Fragment() {
                     binding.expensesRecycler.visibility = View.GONE
                 } else {
                     layoutManager = LinearLayoutManager(requireContext())
-                    adapter = ExpenseAdapter(list)
+                    adapter = ExpenseAdapter(list, findNavController())
                 }
             }
         })

@@ -1,20 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
     app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="com.example.expensify.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard" >
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/dashboard_fragment">
         <action
             android:id="@+id/action_dashboardFragment_to_addExpenseFragment"
             app:destination="@id/addExpenseFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_viewExpenseFragment"
+            app:destination="@id/viewExpenseFragment" />
     </fragment>
     <fragment
         android:id="@+id/addExpenseFragment"
         android:name="com.example.expensify.addexpense.AddExpenseFragment"
-        android:label="@string/title_add_expense">
+        android:label="@string/title_add_expense"
+        tools:layout="@layout/add_expense_fragment">
         <action
             android:id="@+id/action_addExpenseFragment_to_dashboardFragment"
             app:destination="@id/dashboardFragment"
@@ -23,11 +30,21 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.expensify.login.LoginFragment"
-        android:label="LoginFragment">
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_dashboardFragment"
             app:destination="@id/dashboardFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewExpenseFragment"
+        android:name="com.example.expensify.viewexpense.ViewExpenseFragment"
+        android:label="ViewExpenseFragment"
+        tools:layout="@layout/view_expense_fragment">
+        <argument
+            android:name="expense"
+            app:argType="com.example.expensify.helper.FirestoreExpense" />
     </fragment>
 </navigation>
