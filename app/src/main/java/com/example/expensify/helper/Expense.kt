@@ -6,16 +6,16 @@ import java.util.*
 data class FirestoreExpense(
     val docId: String,
     val amount: Double,
-    val title: String,
+    val merchant: String,
     val description: String = "",
-    val location: GeoPoint?,
+    val geoPoint: GeoPoint?,
     val date: Date
 )
 
 data class Expense(
     val amount: Double,
-    val title: String,
+    val merchant: String,
     val description: String = "",
-    val location: GeoPoint?,
+    val geoPoint: GeoPoint?,
     val date: Date
 )

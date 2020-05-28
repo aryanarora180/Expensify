@@ -3,9 +3,9 @@ package com.example.expensify.helper
 import android.app.Application
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 
 class FirestoreRepository(application: Application) {
 
@@ -17,7 +17,7 @@ class FirestoreRepository(application: Application) {
             .add(expense)
     }
 
-    fun getExpenses(): CollectionReference {
+    fun getExpenses(): Query {
         return firestoreDB.collection("Users/$userId/Expenses")
     }
 

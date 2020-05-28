@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.expensify.helper.FirestoreExpense
 import com.example.expensify.helper.FirestoreRepository
+import com.google.firebase.firestore.Query
 import java.text.NumberFormat
 import java.util.*
 import kotlin.math.abs
@@ -24,7 +25,8 @@ class DashboardViewModel(application: Application) : ViewModel() {
     var totalExpenses: MutableLiveData<Double> = MutableLiveData(0.0)
 
     fun getExpenses(): LiveData<List<FirestoreExpense>> {
-        repository.getExpenses().addSnapshotListener { documents, e ->
+        repository.getExpenses().orderBy("date", Query.Direction.DESCENDING)
+            .addSnapshotListener { documents, e ->
             if (e != null) {
                 Log.e(TAG, "Expenses listening failed", e)
                 expensesData.value = null
@@ -53,7 +55,7 @@ class DashboardViewModel(application: Application) : ViewModel() {
                     FirestoreExpense(
                         document.id,
                         amount,
-                        document.getString("title")!!,
+                        document.getString("merchant")!!,
                         document.getString("description") ?: "",
                         document.getGeoPoint("location"),
                         document.getDate("date")!!

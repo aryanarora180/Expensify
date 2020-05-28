@@ -22,7 +22,7 @@ class ExpenseAdapter(private val expensesList: List<FirestoreExpense>) :
             val dateText: TextView = itemView.findViewById(R.id.expense_date_text)
 
             amountText.text = formatAmount(expense.amount)
-            titleText.text = expense.title
+            titleText.text = expense.merchant
             dateText.text = formatDate(expense.date)
         }
 
