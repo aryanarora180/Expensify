@@ -1,7 +1,5 @@
 package com.example.expensify.viewexpense
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.expensify.R
 import com.example.expensify.databinding.ViewExpenseFragmentBinding
@@ -17,7 +16,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import java.util.*
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class ViewExpenseFragment : Fragment() {
 
@@ -31,7 +30,10 @@ class ViewExpenseFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.view_expense_fragment, container, false)
 
-        viewModel = ViewModelProvider(this).get(ViewExpenseViewModel::class.java)
+        viewModel =
+            ViewModelProvider(this, ViewExpenseViewModelFactory(requireActivity().application)).get(
+                ViewExpenseViewModel::class.java
+            )
 
         val args: ViewExpenseFragmentArgs by navArgs()
         val expense = args.expense
@@ -53,6 +55,21 @@ class ViewExpenseFragment : Fragment() {
         binding.expenseDateText.text = viewModel.formatDate(expense.date)
         binding.expenseMerchantText.text = expense.merchant
         binding.expenseDescText.text = expense.description
+
+        binding.deleteImage.setOnClickListener {
+            MaterialAlertDialogBuilder(context)
+                .setTitle(resources.getString(R.string.delete_expense_title))
+                .setMessage(resources.getString(R.string.delete_expense_message))
+                .setNegativeButton(resources.getString(R.string.delete_expense_no)) { dialog, which ->
+                    //Do nothing
+                }
+                .setPositiveButton(resources.getString(R.string.delete_expense_yes)) { dialog, which ->
+                    viewModel.deleteExpense(expense)
+                    findNavController().navigate(R.id.action_viewExpenseFragment_to_dashboardFragment)
+                    //Navigate back
+                }
+                .show()
+        }
 
         return binding.root
     }

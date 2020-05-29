@@ -25,7 +25,8 @@
         <action
             android:id="@+id/action_addExpenseFragment_to_dashboardFragment"
             app:destination="@id/dashboardFragment"
-            app:popUpTo="@id/dashboardFragment" />
+            app:popUpTo="@id/dashboardFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -46,5 +47,10 @@
         <argument
             android:name="expense"
             app:argType="com.example.expensify.helper.FirestoreExpense" />
+        <action
+            android:id="@+id/action_viewExpenseFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment"
+            app:popUpTo="@id/dashboardFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

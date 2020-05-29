@@ -13,4 +13,10 @@
     <string name="balance">Balance</string>
     <string name="expenses">Expenses</string>
     <string name="no_expenses_added">No income or expenses added</string>
+
+    <string name="delete_expense_title">Delete expense</string>
+    <string name="delete_expense_message">Are you sure you want to delete this expense?</string>
+    <string name="delete_expense_yes">Yes</string>
+    <string name="delete_expense_no">No</string>
+
 </resources>
