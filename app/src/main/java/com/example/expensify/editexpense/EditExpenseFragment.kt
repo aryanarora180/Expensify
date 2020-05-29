@@ -27,6 +27,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.GeoPoint
 import java.util.*
+import kotlin.math.abs
 
 class EditExpenseFragment : Fragment() {
 
@@ -78,9 +79,9 @@ class EditExpenseFragment : Fragment() {
         if (expense.amount >= 0.0)
             binding.incomeRadio.isChecked = true
         else
-            binding.expenseRadio.isChecked = false
+            binding.expenseRadio.isChecked = true
 
-        binding.amountEdit.setText(expense.amount.toString())
+        binding.amountEdit.setText(abs(expense.amount).toString())
         binding.titleEdit.setText(expense.merchant)
         binding.descEdit.setText(expense.description)
         binding.expenseDateText.text = viewModel.formatDate(expense.date)
