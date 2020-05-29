@@ -56,6 +56,12 @@ class ViewExpenseFragment : Fragment() {
         binding.expenseMerchantText.text = expense.merchant
         binding.expenseDescText.text = expense.description
 
+        binding.editImage.setOnClickListener {
+            val action =
+                ViewExpenseFragmentDirections.actionViewExpenseFragmentToEditExpenseFragment(expense)
+            findNavController().navigate(action)
+        }
+
         binding.deleteImage.setOnClickListener {
             MaterialAlertDialogBuilder(context)
                 .setTitle(resources.getString(R.string.delete_expense_title))

@@ -18,5 +18,6 @@
     <string name="delete_expense_message">Are you sure you want to delete this expense?</string>
     <string name="delete_expense_yes">Yes</string>
     <string name="delete_expense_no">No</string>
+    <string name="modify_income_expense">Edit income/expense</string>
 
 </resources>

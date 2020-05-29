@@ -16,6 +16,7 @@
         <action
             android:id="@+id/action_dashboardFragment_to_viewExpenseFragment"
             app:destination="@id/viewExpenseFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/addExpenseFragment"
@@ -52,5 +53,22 @@
             app:destination="@id/dashboardFragment"
             app:popUpTo="@id/dashboardFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_viewExpenseFragment_to_editExpenseFragment"
+            app:destination="@id/editExpenseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editExpenseFragment"
+        android:name="com.example.expensify.editexpense.EditExpenseFragment"
+        android:label="EditExpenseFragment"
+        tools:layout="@layout/edit_expense_fragment">
+        <action
+            android:id="@+id/action_editExpenseFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment"
+            app:popUpTo="@id/dashboardFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="expense"
+            app:argType="com.example.expensify.helper.FirestoreExpense" />
     </fragment>
 </navigation>

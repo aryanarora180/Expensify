@@ -21,6 +21,11 @@ class FirestoreRepository(application: Application) {
         return firestoreDB.collection("Users/$userId/Expenses")
     }
 
+    fun editExpense(currentExpense: FirestoreExpense, newExpense: Map<String, Any?>): Task<Void> {
+        return firestoreDB.collection("Users/$userId/Expenses").document(currentExpense.docId)
+            .update(newExpense)
+    }
+
     fun deleteExpense(firestoreExpense: FirestoreExpense): Task<Void> {
         return firestoreDB.collection("Users/$userId/Expenses").document(firestoreExpense.docId)
             .delete()
