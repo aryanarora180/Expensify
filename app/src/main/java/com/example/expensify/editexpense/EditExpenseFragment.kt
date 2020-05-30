@@ -24,6 +24,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.GeoPoint
 import java.util.*
@@ -37,6 +38,8 @@ class EditExpenseFragment : Fragment() {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var geoPoint: GeoPoint? = null
+
+    private lateinit var date: Date
 
     private val REQUEST_LOCATION_PERMISSION = 1
     private var canRequestLocation = false
@@ -81,10 +84,24 @@ class EditExpenseFragment : Fragment() {
         else
             binding.expenseRadio.isChecked = true
 
+        date = expense.date
+
         binding.amountEdit.setText(abs(expense.amount).toString())
         binding.titleEdit.setText(expense.merchant)
         binding.descEdit.setText(expense.description)
-        binding.expenseDateText.text = viewModel.formatDate(expense.date)
+        binding.expenseDateText.text = viewModel.formatDate(date)
+
+        val picker: MaterialDatePicker<Long> =
+            MaterialDatePicker.Builder.datePicker().build().apply {
+                addOnPositiveButtonClickListener {
+                    date = Date(it)
+                    binding.expenseDateText.text = viewModel.formatDate(date)
+                }
+            }
+
+        binding.editDateImage.setOnClickListener {
+            picker.show(parentFragmentManager, picker.toString())
+        }
 
         binding.includeLocCheckbox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
@@ -117,7 +134,7 @@ class EditExpenseFragment : Fragment() {
                                 binding.titleEdit.text.toString(),
                                 binding.descEdit.text.toString(),
                                 geoPoint,
-                                Date()
+                                date
                             )
                         )
                         findNavController().navigate(R.id.action_editExpenseFragment_to_dashboardFragment)
@@ -143,7 +160,7 @@ class EditExpenseFragment : Fragment() {
                         binding.titleEdit.text.toString(),
                         binding.descEdit.text.toString(),
                         null,
-                        Date()
+                        date
                     )
                 )
                 findNavController().navigate(R.id.action_editExpenseFragment_to_dashboardFragment)

@@ -18,8 +18,10 @@ import com.example.expensify.databinding.AddExpenseFragmentBinding
 import com.example.expensify.helper.Expense
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.GeoPoint
+import java.text.SimpleDateFormat
 import java.util.*
 
 class AddExpenseFragment : Fragment() {
@@ -33,11 +35,14 @@ class AddExpenseFragment : Fragment() {
     private lateinit var viewModel: AddExpenseViewModel
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+
     private var geoPoint: GeoPoint? = null
+    private var date = Date()
+
+    val formatter = SimpleDateFormat("MMMM dd", Locale.getDefault())
 
     private val REQUEST_LOCATION_PERMISSION = 1
     private var canRequestLocation = false
-
 
     @SuppressLint("MissingPermission")
     override fun onCreateView(
@@ -50,6 +55,8 @@ class AddExpenseFragment : Fragment() {
             ViewModelProvider(this, AddExpenseViewModelFactory(requireActivity().application)).get(
                 AddExpenseViewModel::class.java
             )
+
+        binding.dateText.text = formatter.format(date)
 
         binding.includeLocCheckbox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
@@ -67,6 +74,18 @@ class AddExpenseFragment : Fragment() {
             }
         }
 
+        val picker: MaterialDatePicker<Long> =
+            MaterialDatePicker.Builder.datePicker().build().apply {
+                addOnPositiveButtonClickListener {
+                    date = Date(it)
+                    binding.dateText.text = formatter.format(date)
+                }
+            }
+
+        binding.editDateImage.setOnClickListener {
+            picker.show(parentFragmentManager, picker.toString())
+        }
+
         binding.addExpenseFab.setOnClickListener {
             var amount = binding.amountEdit.text.toString().toDouble()
             if (binding.expenseRadio.isChecked)
@@ -81,7 +100,7 @@ class AddExpenseFragment : Fragment() {
                                 binding.titleEdit.text.toString(),
                                 binding.descEdit.text.toString(),
                                 geoPoint,
-                                Date()
+                                date
                             )
                         )
                         findNavController().navigate(R.id.action_addExpenseFragment_to_dashboardFragment)
@@ -106,7 +125,7 @@ class AddExpenseFragment : Fragment() {
                         binding.titleEdit.text.toString(),
                         binding.descEdit.text.toString(),
                         null,
-                        Date()
+                        date
                     )
                 )
                 findNavController().navigate(R.id.action_addExpenseFragment_to_dashboardFragment)
