@@ -84,51 +84,85 @@ class AddExpenseFragment : Fragment() {
         }
 
         binding.addExpenseFab.setOnClickListener {
-            var amount = binding.amountEdit.text.toString().toDouble()
-            if (binding.expenseRadio.isChecked)
-                amount *= -1.0
+            val amount = binding.amountEdit.text.toString()
+            val merchant = binding.titleEdit.text.toString()
 
-            if (binding.includeLocCheckbox.isChecked) {
-                if (canRequestLocation) {
-                    if (geoPoint != null) {
-                        viewModel.saveExpense(
-                            Expense(
-                                amount,
-                                binding.titleEdit.text.toString(),
-                                binding.descEdit.text.toString(),
-                                geoPoint,
-                                date
-                            )
+            if (!binding.expenseRadio.isChecked and !binding.incomeRadio.isChecked) {
+                Snackbar.make(
+                    binding.addExpenseCoordinator,
+                    "Please select whether this is an income or expense.",
+                    Snackbar.LENGTH_LONG
+                ).show()
+            } else if (merchant.isNullOrEmpty()) {
+                Snackbar.make(
+                    binding.addExpenseCoordinator,
+                    "Merchant can't be empty.",
+                    Snackbar.LENGTH_LONG
+                ).show()
+            } else if (amount.isNullOrEmpty()) {
+                Snackbar.make(
+                    binding.addExpenseCoordinator,
+                    "Amount can't be empty.",
+                    Snackbar.LENGTH_LONG
+                ).show()
+            } else {
+                try {
+                    var amountDouble = amount.toDouble()
+                    if (binding.expenseRadio.isChecked)
+                        amountDouble *= -1.0
+                    saveExpense(amountDouble, merchant)
+                } catch (e: Exception) {
+                    Snackbar.make(
+                        binding.addExpenseCoordinator,
+                        "Enter a valid amount.",
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }
+        return binding.root
+    }
+
+    fun saveExpense(amount: Double, merchant: String) {
+        if (binding.includeLocCheckbox.isChecked) {
+            if (canRequestLocation) {
+                if (geoPoint != null) {
+                    viewModel.saveExpense(
+                        Expense(
+                            amount,
+                            merchant,
+                            binding.descEdit.text.toString(),
+                            geoPoint,
+                            date
                         )
-                        findNavController().navigate(R.id.action_addExpenseFragment_to_dashboardFragment)
-                    } else {
-                        Snackbar.make(
-                            binding.addExpenseCoordinator,
-                            "Waiting for location...",
-                            Snackbar.LENGTH_SHORT
-                        ).show()
-                    }
+                    )
+                    findNavController().navigate(R.id.action_addExpenseFragment_to_dashboardFragment)
                 } else {
                     Snackbar.make(
                         binding.addExpenseCoordinator,
-                        "Location permission not granted.",
+                        "Waiting for location...",
                         Snackbar.LENGTH_SHORT
                     ).show()
                 }
             } else {
-                viewModel.saveExpense(
-                    Expense(
-                        amount,
-                        binding.titleEdit.text.toString(),
-                        binding.descEdit.text.toString(),
-                        null,
-                        date
-                    )
-                )
-                findNavController().navigate(R.id.action_addExpenseFragment_to_dashboardFragment)
+                Snackbar.make(
+                    binding.addExpenseCoordinator,
+                    "Location permission not granted.",
+                    Snackbar.LENGTH_SHORT
+                ).show()
             }
+        } else {
+            viewModel.saveExpense(
+                Expense(
+                    amount,
+                    merchant,
+                    binding.descEdit.text.toString(),
+                    null,
+                    date
+                )
+            )
+            findNavController().navigate(R.id.action_addExpenseFragment_to_dashboardFragment)
         }
-        return binding.root
     }
 
     private fun locationPermissionIsGranted(): Boolean {

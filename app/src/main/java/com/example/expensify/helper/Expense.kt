@@ -18,7 +18,7 @@ data class FirestoreExpense(
 data class Expense(
     val amount: Double,
     val merchant: String,
-    val description: String = "",
+    val description: String?,
     val geoPoint: GeoPoint?,
     val date: Date
 )

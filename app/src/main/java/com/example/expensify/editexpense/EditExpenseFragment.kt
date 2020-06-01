@@ -17,6 +17,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.expensify.R
 import com.example.expensify.databinding.EditExpenseFragmentBinding
 import com.example.expensify.helper.Expense
+import com.example.expensify.helper.FirestoreExpense
 import com.example.expensify.viewexpense.ViewExpenseFragmentArgs
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -120,54 +121,89 @@ class EditExpenseFragment : Fragment() {
         }
 
         binding.addExpenseFab.setOnClickListener {
-            var amount = binding.amountEdit.text.toString().toDouble()
-            if (binding.expenseRadio.isChecked)
-                amount *= -1.0
+            val amount = binding.amountEdit.text.toString()
+            val merchant = binding.titleEdit.text.toString()
 
-            if (binding.includeLocCheckbox.isChecked) {
-                if (canRequestLocation) {
-                    if (geoPoint != null) {
-                        viewModel.editExpense(
-                            expense,
-                            Expense(
-                                amount,
-                                binding.titleEdit.text.toString(),
-                                binding.descEdit.text.toString(),
-                                geoPoint,
-                                date
-                            )
-                        )
-                        findNavController().navigate(R.id.action_editExpenseFragment_to_dashboardFragment)
-                    } else {
-                        Snackbar.make(
-                            binding.addExpenseCoordinator,
-                            "Waiting for location...",
-                            Snackbar.LENGTH_SHORT
-                        ).show()
-                    }
-                } else {
+            if (!binding.expenseRadio.isChecked and !binding.incomeRadio.isChecked) {
+                Snackbar.make(
+                    binding.addExpenseCoordinator,
+                    "Please select whether this is an income or expense.",
+                    Snackbar.LENGTH_LONG
+                ).show()
+            } else if (merchant.isNullOrEmpty()) {
+                Snackbar.make(
+                    binding.addExpenseCoordinator,
+                    "Merchant can't be empty.",
+                    Snackbar.LENGTH_LONG
+                ).show()
+            } else if (amount.isNullOrEmpty()) {
+                Snackbar.make(
+                    binding.addExpenseCoordinator,
+                    "Amount can't be empty.",
+                    Snackbar.LENGTH_LONG
+                ).show()
+            } else {
+                try {
+                    var amountDouble = amount.toDouble()
+                    if (binding.expenseRadio.isChecked)
+                        amountDouble *= -1.0
+                    editExpense(expense, amountDouble, merchant)
+                } catch (e: Exception) {
+                    e.printStackTrace()
                     Snackbar.make(
                         binding.addExpenseCoordinator,
-                        "Location permission not granted.",
-                        Snackbar.LENGTH_SHORT
+                        "Enter a valid amount.",
+                        Snackbar.LENGTH_LONG
                     ).show()
                 }
-            } else {
-                viewModel.editExpense(
-                    expense,
-                    Expense(
-                        amount,
-                        binding.titleEdit.text.toString(),
-                        binding.descEdit.text.toString(),
-                        null,
-                        date
-                    )
-                )
-                findNavController().navigate(R.id.action_editExpenseFragment_to_dashboardFragment)
             }
         }
 
         return binding.root
+    }
+
+    fun editExpense(oldExpense: FirestoreExpense, amount: Double, merchant: String) {
+        if (binding.includeLocCheckbox.isChecked) {
+            if (canRequestLocation) {
+                if (geoPoint != null) {
+                    viewModel.editExpense(
+                        oldExpense,
+                        Expense(
+                            amount,
+                            merchant,
+                            binding.descEdit.text.toString(),
+                            geoPoint,
+                            date
+                        )
+                    )
+                    findNavController().navigate(R.id.action_editExpenseFragment_to_dashboardFragment)
+                } else {
+                    Snackbar.make(
+                        binding.addExpenseCoordinator,
+                        "Waiting for location...",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
+            } else {
+                Snackbar.make(
+                    binding.addExpenseCoordinator,
+                    "Location permission not granted.",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+        } else {
+            viewModel.editExpense(
+                oldExpense,
+                Expense(
+                    amount,
+                    merchant,
+                    binding.descEdit.text.toString(),
+                    null,
+                    date
+                )
+            )
+            findNavController().navigate(R.id.action_editExpenseFragment_to_dashboardFragment)
+        }
     }
 
     private fun setMapLocation(map: GoogleMap, location: LatLng) {

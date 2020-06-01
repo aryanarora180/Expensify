@@ -68,7 +68,8 @@ class ViewExpenseFragment : Fragment() {
         binding.expenseAmountText.text = viewModel.formattedAmount
         binding.expenseDateText.text = viewModel.formattedDate
         binding.expenseMerchantText.text = expense.merchant
-        binding.expenseDescText.text = expense.description
+        binding.expenseDescText.text =
+            if (expense.description.isNullOrEmpty()) "No description" else expense.description
 
         binding.editFab.setOnClickListener {
             val action =
