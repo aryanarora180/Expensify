@@ -3,6 +3,7 @@ package com.example.expensify.editexpense
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.expensify.R
 import com.example.expensify.helper.Expense
 import com.example.expensify.helper.FirestoreExpense
 import com.example.expensify.helper.FirestoreRepository
@@ -14,7 +15,8 @@ class EditExpenseViewModel(private val application: Application) : ViewModel() {
     private val TAG = "DashboardViewModel"
     private val repository = FirestoreRepository(application)
 
-    private val formatter = SimpleDateFormat("MMMM dd", Locale.getDefault())
+    private val formatter =
+        SimpleDateFormat(application.getString(R.string.date_format), Locale.getDefault())
 
     fun editExpense(previousExpense: FirestoreExpense, newExpense: Expense) {
         repository.editExpense(previousExpense, convertExpenseToMap(newExpense))
@@ -26,11 +28,11 @@ class EditExpenseViewModel(private val application: Application) : ViewModel() {
 
     fun convertExpenseToMap(expense: Expense): Map<String, Any?> {
         return mapOf<String, Any?>(
-            "amount" to expense.amount,
-            "merchant" to expense.merchant,
-            "description" to expense.description,
-            "geoPoint" to expense.geoPoint,
-            "date" to expense.date
+            application.getString(R.string.firestore_expense_field_amount) to expense.amount,
+            application.getString(R.string.firestore_expense_field_merchant) to expense.merchant,
+            application.getString(R.string.firestore_expense_field_description) to expense.description,
+            application.getString(R.string.firestore_expense_field_location) to expense.geoPoint,
+            application.getString(R.string.firestore_expense_field_date) to expense.date
         )
     }
 

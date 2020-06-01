@@ -1,5 +1,6 @@
 package com.example.expensify.dashboard
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +14,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.abs
 
-class ExpenseAdapter(private val expensesList: List<FirestoreExpense>, private val navController: NavController) : RecyclerView.Adapter<ExpenseAdapter.ViewHolder>() {
+class ExpenseAdapter(
+    private val expensesList: List<FirestoreExpense>,
+    private val navController: NavController,
+    private val context: Context
+) : RecyclerView.Adapter<ExpenseAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindItems(expense: FirestoreExpense) {
@@ -28,14 +33,21 @@ class ExpenseAdapter(private val expensesList: List<FirestoreExpense>, private v
 
         private fun formatAmount(double: Double): String {
             return if (double >= 0.0) {
-                "+ ₹${NumberFormat.getNumberInstance(Locale.getDefault()).format(double)}"
+                "${itemView.context.getString(R.string.positive_amount)} ${itemView.context.getString(
+                    R.string.inr_symbol
+                )}${NumberFormat.getNumberInstance(Locale.getDefault()).format(double)}"
             } else {
-                "- ₹${NumberFormat.getNumberInstance(Locale.getDefault()).format(abs(double))}"
+                "${itemView.context.getString(R.string.negative_amount)} ${itemView.context.getString(
+                    R.string.inr_symbol
+                )}${NumberFormat.getNumberInstance(Locale.getDefault()).format(abs(double))}"
             }
         }
 
         private fun formatDate(dateToFormat: Date): String {
-            return SimpleDateFormat("MMMM dd", Locale.getDefault()).format(dateToFormat)
+            return SimpleDateFormat(
+                itemView.context.getString(R.string.date_format),
+                Locale.getDefault()
+            ).format(dateToFormat)
         }
 
     }

@@ -69,7 +69,7 @@ class ViewExpenseFragment : Fragment() {
         binding.expenseDateText.text = viewModel.formattedDate
         binding.expenseMerchantText.text = expense.merchant
         binding.expenseDescText.text =
-            if (expense.description.isNullOrEmpty()) "No description" else expense.description
+            if (expense.description.isNullOrEmpty()) getString(R.string.no_description) else expense.description
 
         binding.editFab.setOnClickListener {
             val action =
@@ -87,7 +87,6 @@ class ViewExpenseFragment : Fragment() {
                 .setPositiveButton(resources.getString(R.string.delete_expense_yes)) { dialog, which ->
                     viewModel.deleteExpense(expense)
                     findNavController().navigate(R.id.action_viewExpenseFragment_to_dashboardFragment)
-                    //Navigate back
                 }
                 .show()
         }

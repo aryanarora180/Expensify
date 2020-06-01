@@ -6,7 +6,11 @@
     <string name="login_failed">Login failed. Please try again.</string>
     <string name="add_income_expense">Add income/expense</string>
     <string name="income">Income</string>
+    <string name="income_no_caps">income</string>
     <string name="expense">Expense</string>
+    <string name="expense_no_caps">expense</string>
+    <string name="an">An</string>
+    <string name="on">on</string>
     <string name="amount">Amount</string>
     <string name="merchant">Merchant</string>
     <string name="description">Description</string>
@@ -14,15 +18,41 @@
     <string name="expenses">Expenses</string>
     <string name="no_expenses_added">No income or expenses added</string>
 
+    <string name="sign_out_title">Sign out</string>
+    <string name="sign_out_body">Are you sure you want to sign out?</string>
+    <string name="sign_out_yes">Yes</string>
+    <string name="sign_out_no">No</string>
+
     <string name="delete_expense_title">Delete expense</string>
     <string name="delete_expense_message">Are you sure you want to delete this expense?</string>
     <string name="delete_expense_yes">Yes</string>
     <string name="delete_expense_no">No</string>
     <string name="modify_income_expense">Edit income/expense</string>
+    <string name="positive_amount">+</string>
+    <string name="negative_amount">-</string>
+    <string name="inr_symbol">₹</string>
     <string name="inr">INR</string>
     <string name="all_transactions">All transactions</string>
     <string name="include_current_location">Include current location</string>
     <string name="change_to_current_location">Change to current location</string>
     <string name="edit_income_expense">Edit income/expense</string>
+
+    <string name="date_format">MMMM dd</string>
+    <string name="date">Date:</string>
+
+    <string name="no_description">No description.</string>
+
+    <string name="error_select_income_expense">Please select whether this is an income or expense.</string>
+    <string name="error_empty_merchant">Merchant can\'t be empty.</string>
+    <string name="error_empty_amount">Amount can\'t be empty.</string>
+    <string name="error_invalid_amount">Enter a valid amount.</string>
+    <string name="error_location_no_permission">Location permission not granted.</string>
+    <string name="location_waiting">Waiting for location.</string>
+
+    <string name="firestore_expense_field_amount">amount</string>
+    <string name="firestore_expense_field_date">date</string>
+    <string name="firestore_expense_field_description">description</string>
+    <string name="firestore_expense_field_location">geoPoint</string>
+    <string name="firestore_expense_field_merchant">merchant</string>
 
 </resources>

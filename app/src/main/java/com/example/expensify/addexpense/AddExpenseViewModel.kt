@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.expensify.R
 import com.example.expensify.helper.Expense
 import com.example.expensify.helper.FirestoreRepository
 import java.text.SimpleDateFormat
@@ -14,7 +15,8 @@ class AddExpenseViewModel(private val application: Application) : ViewModel() {
     private val TAG = "DashboardViewModel"
     private val repository = FirestoreRepository(application)
 
-    val formatter = SimpleDateFormat("MMMM dd", Locale.getDefault())
+    val formatter =
+        SimpleDateFormat(application.getString(R.string.date_format), Locale.getDefault())
 
     fun saveExpense(expense: Expense) {
         repository.saveExpense(expense).addOnFailureListener {
@@ -23,7 +25,7 @@ class AddExpenseViewModel(private val application: Application) : ViewModel() {
     }
 
     fun formatDate(date: Date): String {
-        return "Date: ${formatter.format(date)}"
+        return "${application.getString(R.string.date)} ${formatter.format(date)}"
     }
 
 }

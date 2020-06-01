@@ -10,7 +10,7 @@ data class FirestoreExpense(
     val docId: String,
     val amount: Double,
     val merchant: String,
-    val description: String = "",
+    val description: String?,
     val geoPoint: GeoPoint?,
     val date: Date
 ) : Serializable

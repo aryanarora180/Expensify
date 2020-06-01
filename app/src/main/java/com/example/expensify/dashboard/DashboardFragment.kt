@@ -37,7 +37,7 @@ class DashboardFragment : Fragment() {
                     binding.expensesRecycler.visibility = View.GONE
                 } else {
                     layoutManager = LinearLayoutManager(requireContext())
-                    adapter = ExpenseAdapter(list, findNavController())
+                    adapter = ExpenseAdapter(list, findNavController(), requireContext())
                 }
             }
         })
@@ -53,6 +53,7 @@ class DashboardFragment : Fragment() {
         viewModel.totalExpenses.observe(viewLifecycleOwner, Observer { expenses ->
             binding.expenseAmountText.text = viewModel.formatAmount(expenses)
         })
+
 
         return binding.root
     }

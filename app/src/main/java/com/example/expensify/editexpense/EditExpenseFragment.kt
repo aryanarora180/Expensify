@@ -127,19 +127,19 @@ class EditExpenseFragment : Fragment() {
             if (!binding.expenseRadio.isChecked and !binding.incomeRadio.isChecked) {
                 Snackbar.make(
                     binding.addExpenseCoordinator,
-                    "Please select whether this is an income or expense.",
+                    R.string.error_select_income_expense,
                     Snackbar.LENGTH_LONG
                 ).show()
-            } else if (merchant.isNullOrEmpty()) {
+            } else if (merchant.isEmpty()) {
                 Snackbar.make(
                     binding.addExpenseCoordinator,
-                    "Merchant can't be empty.",
+                    R.string.error_empty_merchant,
                     Snackbar.LENGTH_LONG
                 ).show()
-            } else if (amount.isNullOrEmpty()) {
+            } else if (amount.isEmpty()) {
                 Snackbar.make(
                     binding.addExpenseCoordinator,
-                    "Amount can't be empty.",
+                    R.string.error_empty_amount,
                     Snackbar.LENGTH_LONG
                 ).show()
             } else {
@@ -152,7 +152,7 @@ class EditExpenseFragment : Fragment() {
                     e.printStackTrace()
                     Snackbar.make(
                         binding.addExpenseCoordinator,
-                        "Enter a valid amount.",
+                        R.string.error_invalid_amount,
                         Snackbar.LENGTH_LONG
                     ).show()
                 }
@@ -162,7 +162,7 @@ class EditExpenseFragment : Fragment() {
         return binding.root
     }
 
-    fun editExpense(oldExpense: FirestoreExpense, amount: Double, merchant: String) {
+    private fun editExpense(oldExpense: FirestoreExpense, amount: Double, merchant: String) {
         if (binding.includeLocCheckbox.isChecked) {
             if (canRequestLocation) {
                 if (geoPoint != null) {
@@ -180,14 +180,14 @@ class EditExpenseFragment : Fragment() {
                 } else {
                     Snackbar.make(
                         binding.addExpenseCoordinator,
-                        "Waiting for location...",
+                        R.string.location_waiting,
                         Snackbar.LENGTH_SHORT
                     ).show()
                 }
             } else {
                 Snackbar.make(
                     binding.addExpenseCoordinator,
-                    "Location permission not granted.",
+                    R.string.error_location_no_permission,
                     Snackbar.LENGTH_SHORT
                 ).show()
             }

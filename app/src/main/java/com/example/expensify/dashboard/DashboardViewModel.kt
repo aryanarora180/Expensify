@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.expensify.R
 import com.example.expensify.helper.FirestoreExpense
 import com.example.expensify.helper.FirestoreRepository
 import com.google.firebase.firestore.Query
@@ -13,7 +14,7 @@ import java.text.NumberFormat
 import java.util.*
 import kotlin.math.abs
 
-class DashboardViewModel(application: Application) : ViewModel() {
+class DashboardViewModel(private val application: Application) : ViewModel() {
 
     private val TAG = "DashboardViewModel"
 
@@ -25,21 +26,25 @@ class DashboardViewModel(application: Application) : ViewModel() {
     var totalExpenses: MutableLiveData<Double> = MutableLiveData(0.0)
 
     fun getExpenses(): LiveData<List<FirestoreExpense>> {
-        repository.getExpenses().orderBy("date", Query.Direction.DESCENDING)
+        repository.getExpenses().orderBy(
+            application.getString(R.string.firestore_expense_field_date),
+            Query.Direction.DESCENDING
+        )
             .addSnapshotListener { documents, e ->
-            if (e != null) {
-                Log.e(TAG, "Expenses listening failed", e)
-                expensesData.value = null
-                return@addSnapshotListener
-            }
+                if (e != null) {
+                    Log.e(TAG, "Expenses listening failed", e)
+                    expensesData.value = null
+                    return@addSnapshotListener
+                }
 
-            val expensesList: MutableList<FirestoreExpense> = mutableListOf()
-            var balance = 0.0
-            var income = 0.0
+                val expensesList: MutableList<FirestoreExpense> = mutableListOf()
+                var balance = 0.0
+                var income = 0.0
             var expenses = 0.0
 
             documents?.forEach { document ->
-                val amount = document.getDouble("amount")!!
+                val amount =
+                    document.getDouble(application.getString(R.string.firestore_expense_field_amount))!!
 
                 balance += amount
                 if (amount >= 0.0)
@@ -55,10 +60,10 @@ class DashboardViewModel(application: Application) : ViewModel() {
                     FirestoreExpense(
                         document.id,
                         amount,
-                        document.getString("merchant")!!,
-                        document.getString("description") ?: "",
-                        document.getGeoPoint("geoPoint"),
-                        document.getDate("date")!!
+                        document.getString(application.getString(R.string.firestore_expense_field_merchant))!!,
+                        document.getString(application.getString(R.string.firestore_expense_field_description)),
+                        document.getGeoPoint(application.getString(R.string.firestore_expense_field_location)),
+                        document.getDate(application.getString(R.string.firestore_expense_field_date))!!
                     )
                 )
             }
@@ -69,9 +74,12 @@ class DashboardViewModel(application: Application) : ViewModel() {
 
     fun formatAmount(double: Double): String {
         return if (double >= 0.0) {
-            "₹${NumberFormat.getNumberInstance(Locale.getDefault()).format(double)}"
+            "${application.getString(R.string.inr_symbol)}${NumberFormat.getNumberInstance(Locale.getDefault())
+                .format(double)}"
         } else {
-            "-₹${NumberFormat.getNumberInstance(Locale.getDefault()).format(abs(double))}"
+            "${application.getString(R.string.negative_amount)}${application.getString(R.string.inr_symbol)}${NumberFormat.getNumberInstance(
+                Locale.getDefault()
+            ).format(abs(double))}"
         }
     }
 
