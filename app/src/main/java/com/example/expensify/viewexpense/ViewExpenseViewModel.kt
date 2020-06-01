@@ -20,7 +20,7 @@ class ViewExpenseViewModel(application: Application, private val expense: Firest
     val formattedAmount =
         "₹${NumberFormat.getNumberInstance(Locale.getDefault()).format(abs(expense.amount))}"
     val isIncome = expense.amount >= 0.0
-    val type = if (isIncome) "Income" else "Expense"
+    val type = if (isIncome) "income" else "expense"
     val formattedDate = "An $type on ${formatter.format(expense.date)}"
 
     fun deleteExpense(expense: FirestoreExpense) {

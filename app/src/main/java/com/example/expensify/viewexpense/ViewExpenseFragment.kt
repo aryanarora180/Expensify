@@ -1,9 +1,11 @@
 package com.example.expensify.viewexpense
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -56,7 +58,13 @@ class ViewExpenseFragment : Fragment() {
         }
 
         binding.incomeOrExpenseImage.setImageResource(if (viewModel.isIncome) R.drawable.baseline_trending_up_24 else R.drawable.baseline_trending_down_24)
-        binding.expenseTypeText.text = viewModel.type
+        binding.incomeOrExpenseImage.imageTintList = ColorStateList.valueOf(
+            ContextCompat.getColor(
+                requireContext(),
+                if (viewModel.isIncome) R.color.colorRisingText else R.color.colorFallingText
+            )
+        )
+        binding.expenseTypeText.text = viewModel.type.capitalize()
         binding.expenseAmountText.text = viewModel.formattedAmount
         binding.expenseDateText.text = viewModel.formattedDate
         binding.expenseMerchantText.text = expense.merchant
