@@ -6,10 +6,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.expensify.helper.Expense
 import com.example.expensify.helper.FirestoreExpense
 import com.example.expensify.helper.FirestoreRepository
-import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.abs
 
 class EditExpenseViewModel(private val application: Application) : ViewModel() {
 
@@ -22,16 +20,8 @@ class EditExpenseViewModel(private val application: Application) : ViewModel() {
         repository.editExpense(previousExpense, convertExpenseToMap(newExpense))
     }
 
-    fun formatAmount(double: Double): String {
-        return if (double >= 0.0) {
-            "₹${NumberFormat.getNumberInstance(Locale.getDefault()).format(double)}"
-        } else {
-            "-₹${NumberFormat.getNumberInstance(Locale.getDefault()).format(abs(double))}"
-        }
-    }
-
     fun formatDate(dateToFormat: Date): String {
-        return formatter.format(dateToFormat)
+        return "Date: ${formatter.format(dateToFormat)}"
     }
 
     fun convertExpenseToMap(expense: Expense): Map<String, Any?> {

@@ -28,18 +28,22 @@ class ViewExpenseFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.view_expense_fragment, container, false)
-
-        viewModel =
-            ViewModelProvider(this, ViewExpenseViewModelFactory(requireActivity().application)).get(
-                ViewExpenseViewModel::class.java
-            )
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.view_expense_fragment, container, false)
 
         val args: ViewExpenseFragmentArgs by navArgs()
         val expense = args.expense
 
+        viewModel =
+            ViewModelProvider(
+                this,
+                ViewExpenseViewModelFactory(requireActivity().application, expense)
+            ).get(
+                ViewExpenseViewModel::class.java
+            )
+
         val geoPoint = expense.geoPoint
-        if(geoPoint != null) {
+        if (geoPoint != null) {
             with(binding.expenseLocationMap) {
                 onCreate(null)
                 getMapAsync {
@@ -51,18 +55,20 @@ class ViewExpenseFragment : Fragment() {
             binding.expenseLocationMap.visibility = View.GONE
         }
 
-        binding.expenseAmountText.text = viewModel.formatAmount(expense.amount)
-        binding.expenseDateText.text = viewModel.formatDate(expense.date)
+        binding.incomeOrExpenseImage.setImageResource(if (viewModel.isIncome) R.drawable.baseline_trending_up_24 else R.drawable.baseline_trending_down_24)
+        binding.expenseTypeText.text = viewModel.type
+        binding.expenseAmountText.text = viewModel.formattedAmount
+        binding.expenseDateText.text = viewModel.formattedDate
         binding.expenseMerchantText.text = expense.merchant
         binding.expenseDescText.text = expense.description
 
-        binding.editImage.setOnClickListener {
+        binding.editFab.setOnClickListener {
             val action =
                 ViewExpenseFragmentDirections.actionViewExpenseFragmentToEditExpenseFragment(expense)
             findNavController().navigate(action)
         }
 
-        binding.deleteImage.setOnClickListener {
+        binding.deleteFab.setOnClickListener {
             MaterialAlertDialogBuilder(context)
                 .setTitle(resources.getString(R.string.delete_expense_title))
                 .setMessage(resources.getString(R.string.delete_expense_message))

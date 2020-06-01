@@ -16,10 +16,11 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
                 android:text="@string/add_income_expense"
-                android:textSize="24sp"
+                android:textColor="@color/colorDarkCardBackground"
+                android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,9 +28,9 @@
                 android:id="@+id/income_or_expense_radio_group"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="24dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -53,10 +54,10 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/amount_text_layout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="24dp"
                 android:hint="@string/amount"
                 android:minWidth="120dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -74,10 +75,10 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/title_text_layout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:hint="@string/merchant"
@@ -89,6 +90,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/title_edit"
+                    android:singleLine="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -96,12 +98,12 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/desc_text_layout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="24dp"
                 android:hint="@string/description"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -122,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="Include current location"
+                android:text="@string/include_current_location"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/desc_text_layout" />
 
@@ -130,11 +132,12 @@
                 android:id="@+id/date_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
+                android:textColor="@color/colorDarkCardBackground"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/income_or_expense_radio_group"
-                tools:text="May 30" />
+                tools:text="Date: May 30" />
 
             <ImageView
                 android:id="@+id/edit_date_image"
@@ -154,6 +157,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
+            app:backgroundTint="@color/colorAccent"
+            app:tint="@color/colorDarkCardText"
             app:srcCompat="@drawable/outline_save_24" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

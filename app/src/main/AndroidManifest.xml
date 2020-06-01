@@ -21,9 +21,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBONty34nFfX96CiV2o6tWXCgk8GqAzrjw"/>
+            android:value="AIzaSyBONty34nFfX96CiV2o6tWXCgk8GqAzrjw" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

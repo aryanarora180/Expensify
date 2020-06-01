@@ -21,7 +21,6 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.GeoPoint
-import java.text.SimpleDateFormat
 import java.util.*
 
 class AddExpenseFragment : Fragment() {
@@ -39,8 +38,6 @@ class AddExpenseFragment : Fragment() {
     private var geoPoint: GeoPoint? = null
     private var date = Date()
 
-    val formatter = SimpleDateFormat("MMMM dd", Locale.getDefault())
-
     private val REQUEST_LOCATION_PERMISSION = 1
     private var canRequestLocation = false
 
@@ -56,7 +53,7 @@ class AddExpenseFragment : Fragment() {
                 AddExpenseViewModel::class.java
             )
 
-        binding.dateText.text = formatter.format(date)
+        binding.dateText.text = viewModel.formatDate(date)
 
         binding.includeLocCheckbox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
@@ -78,7 +75,7 @@ class AddExpenseFragment : Fragment() {
             MaterialDatePicker.Builder.datePicker().build().apply {
                 addOnPositiveButtonClickListener {
                     date = Date(it)
-                    binding.dateText.text = formatter.format(date)
+                    binding.dateText.text = viewModel.formatDate(date)
                 }
             }
 

@@ -1,6 +1,5 @@
 package com.example.expensify.dashboard
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,9 +28,9 @@ class ExpenseAdapter(private val expensesList: List<FirestoreExpense>, private v
 
         private fun formatAmount(double: Double): String {
             return if (double >= 0.0) {
-                "₹${NumberFormat.getNumberInstance(Locale.getDefault()).format(double)}"
+                "+ ₹${NumberFormat.getNumberInstance(Locale.getDefault()).format(double)}"
             } else {
-                "-₹${NumberFormat.getNumberInstance(Locale.getDefault()).format(abs(double))}"
+                "- ₹${NumberFormat.getNumberInstance(Locale.getDefault()).format(abs(double))}"
             }
         }
 

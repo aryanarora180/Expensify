@@ -6,16 +6,24 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.expensify.helper.Expense
 import com.example.expensify.helper.FirestoreRepository
+import java.text.SimpleDateFormat
+import java.util.*
 
 class AddExpenseViewModel(private val application: Application) : ViewModel() {
 
     private val TAG = "DashboardViewModel"
     private val repository = FirestoreRepository(application)
 
+    val formatter = SimpleDateFormat("MMMM dd", Locale.getDefault())
+
     fun saveExpense(expense: Expense) {
         repository.saveExpense(expense).addOnFailureListener {
             Log.e(TAG, "Failed to save Address!")
         }
+    }
+
+    fun formatDate(date: Date): String {
+        return "Date: ${formatter.format(date)}"
     }
 
 }

@@ -19,5 +19,10 @@
     <string name="delete_expense_yes">Yes</string>
     <string name="delete_expense_no">No</string>
     <string name="modify_income_expense">Edit income/expense</string>
+    <string name="inr">INR</string>
+    <string name="all_transactions">All transactions</string>
+    <string name="include_current_location">Include current location</string>
+    <string name="change_to_current_location">Change to current location</string>
+    <string name="edit_income_expense">Edit income/expense</string>
 
 </resources>

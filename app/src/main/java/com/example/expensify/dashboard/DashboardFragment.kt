@@ -51,7 +51,7 @@ class DashboardFragment : Fragment() {
         })
 
         viewModel.totalExpenses.observe(viewLifecycleOwner, Observer { expenses ->
-            binding.expensesAmountText.text = viewModel.formatAmount(expenses)
+            binding.expenseAmountText.text = viewModel.formatAmount(expenses)
         })
 
         return binding.root

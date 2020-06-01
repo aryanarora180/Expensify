@@ -89,13 +89,13 @@ class EditExpenseFragment : Fragment() {
         binding.amountEdit.setText(abs(expense.amount).toString())
         binding.titleEdit.setText(expense.merchant)
         binding.descEdit.setText(expense.description)
-        binding.expenseDateText.text = viewModel.formatDate(date)
+        binding.dateText.text = viewModel.formatDate(date)
 
         val picker: MaterialDatePicker<Long> =
             MaterialDatePicker.Builder.datePicker().build().apply {
                 addOnPositiveButtonClickListener {
                     date = Date(it)
-                    binding.expenseDateText.text = viewModel.formatDate(date)
+                    binding.dateText.text = viewModel.formatDate(date)
                 }
             }
 
