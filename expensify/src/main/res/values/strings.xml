@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Expensify</string>
+    <string name="balance">Balance</string>
+    <string name="inr">INR</string>
+</resources>

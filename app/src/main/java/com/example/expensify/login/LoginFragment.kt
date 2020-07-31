@@ -1,11 +1,11 @@
 package com.example.expensify.login
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -26,7 +26,6 @@ class LoginFragment : Fragment() {
     }
 
     private val viewModel by viewModels<LoginViewModel>()
-
     private lateinit var binding: FragmentLoginBinding
 
     override fun onCreateView(
@@ -61,30 +60,27 @@ class LoginFragment : Fragment() {
             AuthUI.IdpConfig.EmailBuilder().build(),
             AuthUI.IdpConfig.GoogleBuilder().build()
         )
-        startActivityForResult(
+
+        val startSignIn =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                val response = IdpResponse.fromResultIntent(result.data)
+                if (result.resultCode == Activity.RESULT_OK) {
+                    findNavController().navigate(R.id.action_loginFragment_to_dashboardFragment)
+                } else {
+                    if (response != null)
+                        Snackbar.make(
+                            binding.loginCoordinator,
+                            R.string.login_failed,
+                            Snackbar.LENGTH_SHORT
+                        )
+                }
+            }
+        startSignIn.launch(
             AuthUI.getInstance()
                 .createSignInIntentBuilder()
                 .setAvailableProviders(providers)
-                .build(),
-            SIGN_IN_REQUEST_CODE
+                .build()
         )
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == SIGN_IN_RESULT_CODE) {
-            val response = IdpResponse.fromResultIntent(data)
-            if (resultCode == Activity.RESULT_OK) {
-                findNavController().navigate(R.id.action_loginFragment_to_dashboardFragment)
-            } else {
-                if (response != null)
-                    Snackbar.make(
-                        binding.loginCoordinator,
-                        R.string.login_failed,
-                        Snackbar.LENGTH_SHORT
-                    )
-            }
-        }
     }
 
 }
